@@ -1,0 +1,25 @@
+---
+- name: Ensure apt cache is updated
+  ansible.builtin.apt:
+    update_cache: yes
+  changed_when: false
+
+- name: Install Apache2
+  ansible.builtin.apt:
+    name: apache2
+    state: present
+
+- name: Ensure Apache2 is started and enabled
+  ansible.builtin.service:
+    name: apache2
+    state: started
+    enabled: yes
+
+- name: Copy static HTML file
+  ansible.builtin.copy:
+    src: files/index.html
+    dest: /var/www/html/index.html
+    owner: www-data
+    group: www-data
+    mode: '0644'
+  notify: restart apache

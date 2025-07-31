@@ -1,0 +1,6 @@
+---
+- name: Install Apache and deploy static HTML using custom role
+  hosts: webserver
+  become: yes
+  roles:
+    - httpd
